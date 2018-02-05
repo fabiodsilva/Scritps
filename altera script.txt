@@ -1,0 +1,70 @@
+
+
+
+echo #--------------------------------------------------------"
+echo "jacl"
+echo #--------------------------------------------------------"
+
+sed -i '/cbss.app.ear.location.*/ a\set earFileLocationexport \[\$cbss_props getProperty cbss.app.ear.exportdst\] ' *.jacl
+sed -i '/Exporting the application.*/c\\tputs \"Exporting the application \$earFileName into \$earFileLocationexport/\$earFileName-\$timestamp.ear\" ' deploy/$PKT/*.jacl
+sed -i '/\$AdminApp export .*/c\\t$AdminApp export \$earFileName \$earFileLocationexport/\$earFileName-\$timestamp.ear' deploy/$PKT/*.jacl
+
+
+
+
+
+echo #--------------------------------------------------------"	
+echo "deploy/$PKT/*.props"
+echo #--------------------------------------------------------"
+echo "" >>*.props
+echo "#--------------------------------------------------------" >> deploy/$PKT/*.props
+echo "# cbss.app.ear.exportdst= location of export will be copy" >> deploy/$PKT/*.props
+echo "#--------------------------------------------------------" >> deploy/$PKT/*.props
+echo "cbss.app.ear.exportdst=" >> deploy/$PKT/*.props
+
+
+
+
+
+echo #--------------------------------------------------------"
+echo "deploy/$PKT/run.sh"
+echo #--------------------------------------------------------"
+
+sed -i /^TMP_DIR=.*/cTMP_DIR=\"/opt/autodeploy/tmp\" deploy/$PKT/run.sh
+sed -i "/^TMP_FILE_LOG=.*/cTMP_FILE_LOG=\"deploy.log\"" deploy/$PKT/run.sh
+sed -i "/^INC_DIR=.*/cINC_DIR=\"/opt/autodeploy/deploy/includes\"" deploy/$PKT/run.sh
+
+echo "" >> run.sh
+echo "#########################################" >> deploy/$PKT/run.sh
+echo "#  Copia o log para a pasta definitiva  #" >> deploy/$PKT/run.sh
+echo "#########################################" >> deploy/$PKT/run.sh
+echo "" >> deploy/$PKT/run.sh
+echo 'REPOS="/opt/repositorio"' >> deploy/$PKT/run.sh
+echo 'EMPRESA="SCOPUS"' >> deploy/$PKT/run.sh
+echo "" >> deploy/$PKT/run.sh
+echo 'cp $TMP_DIR/$TMP_FILE_LOG $REPOS/$EMPRESA/LOG/$APP_EAR_NAME-`date +%d%m%y%H%M%S`.log' >> deploy/$PKT/run.sh
+
+
+
+		set earFileLocationexport [$cbss_props getProperty cbss.app.ear.exportdst]
+
+		puts "Exporting the application $earFileName into $earFileLocationexport/$earFileName$timestamp.ear"
+		puts "-------------------------"
+        $AdminApp export $earFileName $earFileLocationexport/$earFileName$timestamp.ear
+
+	
+	
+	
+	
+	
+	
+	
+	MAIL_TO="l-admin-middleware@uoldiveo.com"
+
+		
+	sed -i "/^MAIL_TO=.*/cMAIL_TO=\"l-admin-middleware@uoldiveo.com,jataide@alelo.com.br\"" run.sh
+	
+	sed -i "/^INC_DIR=.*/INC_DIR=\"\/opt\/autodeploy\/includes\"" run.sh
+	
+		/opt/autodeploy/includes
+	

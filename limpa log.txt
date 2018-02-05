@@ -1,0 +1,43 @@
+#!/bin/sh
+SOURCEDIR=/opt/appserver7/domains/domain1/cbss/logs
+TARGETDIR=/bkp/logs
+LIST=logs_antigos
+
+cd $SOURCEDIR
+
+find *access* -mtime +1 > $LIST
+
+find server.log* -mtime +1 >> $LIST
+
+for x in `cat $LIST`; do
+        gzip $x
+        mv *.gz $TARGETDIR
+done
+rm -rf $LIST
+root@WEBTB2255A[/root]#
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+[root@srvora01 tmp]# more limpa_files.sh
+#!/bin/sh
+
+#Fabio Donizeti - Diveo do Brasil
+#Script deleta o conteudo mais velho de 5 dias das pastas listadas no arquivo LIST_FOLDER
+
+
+SOURCEDIR=`cat /tmp/LIST_FOLDER`
+LIST=logs_antigos
+        for SOURCE in $SOURCEDIR;
+        do
+
+                #ls $SOURCE/* > $LIST
+                find $SOURCE/* -mtime 0 > $LIST
+                        for x in `cat $LIST`; do
+                        #echo "Debug $x"
+                        rm -rf $x
+                        done
+        done
+
+
+[root@srvora01 tmp]#

@@ -1,0 +1,40 @@
+#!/bin/bash
+
+#Fabio Donizeti da Silva
+#Este script verificar a existencia do link simbolico anexar na pasta /cbssconfig/localfiles/Web/files
+#Se não existir ele cria novamente, caso já exista não faz nada.
+
+
+
+if [ `ls /cbssconfig/localfiles/Web/files | grep anexar` ] 
+then
+
+echo `date "+%d/%m/%y %H:%M:%S"` link simpolico ok >> /var/log/monitoracao_diveo/log_ln/logln.log
+
+else
+
+ln -s /cbssshared/Web/files/anexar /cbssconfig/localfiles/Web/files/anexar
+echo `date "+%d/%m/%y %H:%M:%S"` link simpolico not ok - Criado novamente >> /var/log/monitoracao_diveo/log_ln/logln.log
+
+fi
+
+
+/var/log/monitoracao_diveo/mon_ln_anexar.sh
+
+
+
+
+#!/bin/bash
+
+if [ `ls /root/testeln/te | grep dest` ]
+then
+
+echo `date "+%d/%m/%y %H:%M:%S"` link simpolico ok >> /root/testeln/logln.log
+
+else
+
+ln -s /root/testeln/ori /root/testeln/te/dest
+echo `date "+%d/%m/%y %H:%M:%S"` link simpolico not ok - Criado novamente >> /var/log/monitoracao_diveo/log_ln/logln.log
+
+
+fi

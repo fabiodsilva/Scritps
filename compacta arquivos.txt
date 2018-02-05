@@ -1,0 +1,25 @@
+
+Compacta arquivos
+
+[root@SRVAPPWAS03 logs]# more /var/sar/compact_sysout.sh
+#!/bin/bash
+
+if [[ -z $1 ]] ;
+ then
+  echo
+  echo JVM missing...
+  exit 1
+fi
+
+JVM=$1
+
+cd /opt/IBM/WAS/profiles/Custom0?/logs/${JVM}
+
+for i in `ls System???_*.log` ; do
+
+gzip $i
+echo File $i compacted...
+
+done
+
+[root@SRVAPPWAS03 logs]#

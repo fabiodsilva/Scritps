@@ -1,0 +1,18 @@
+#!/bin/sh
+
+SOURCEDIR=/u12/app/oracle/product/10.2.0/ebsh/network/log
+LIST=logs_antigos
+
+cd $SOURCEDIR
+
+find *.log > $LIST
+
+for x in `cat $LIST`; do
+        newfile=`ls -1 $x | awk -F "." '{print $1}'`
+        cp $x $newfile-`date "+%d%m%y%H%M%S"`.log
+        #ls -lah $x
+        echo "compactando... $newfile-`date "+%d%m%y%H%M%S"`.log"
+        echo "" > $x
+        gzip $newfile-`date "+%d%m%y%H%M%S"`.log
+        echo Fim
+done

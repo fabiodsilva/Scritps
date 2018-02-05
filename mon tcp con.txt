@@ -1,0 +1,79 @@
+[root@FATSTLTB578B ~]# more /var/log/monitoracao_diveo/mon_ora.sh
+##!/bin/bash
+##Fabio Donizeti - 12-04-2012
+##Monitora se ha mais de 100 conexoes na porta 80;
+##caso repita 3 vezes acima de 100, envia email alarmando;
+##caso repita 3 vezes abaixo, envia email avisando saida do estado de alarme
+##alarme = 1 ; sistema alarmado
+##alarme = 0 ; sistema em condicao normal
+
+alarme=`cat alarme.txt`
+teste=`netstat -an| grep 80| wc -l`
+
+echo `date "+%d/%m/%y %H:%M:%S"`   $teste >> /var/log/monitoracao_diveo/logs/monitora-80-`hostname`-`date "+%d%m%y"`.log
+
+LOG_DIR="/var/log/monitoracao_diveo/logs"
+LOG_FILE="monitora-80-`hostname`-`date "+%d%m%y"`.log"
+INC_DIR="/var/log/monitoracao_diveo"
+MAIL_FROM="teste@voeazul.com.br"
+#MAIL_TO="fdonizete@uoldiveo.com"
+MAIL_TO="l-admin-middleware@uoldiveo.com, daniel.maglione@voeazul.com.br"
+
+threshold=4000
+
+
+##Se nao estiver alarmado
+if [ $alarme -eq 0 ]
+then
+                if [ $teste -gt $threshold ]
+                then
+                                cont_alarmado=`cat cont_alarmado.txt`
+                                expr $cont_alarmado + 1 > cont_alarmado.txt
+                else
+                               echo "0" > cont_alarmado.txt
+                               echo "0" > alarme.txt
+                fi
+
+                cont_alarmado=`cat cont_alarmado.txt`
+
+##Testa se deve enviar email de alarme ou nao
+                if [ $cont_alarmado -gt 3 ]
+                then
+
+
+$INC_DIR/sendEmail -f $MAIL_FROM -t $MAIL_TO -u "Servidor `hostname` em `date "+%d/%m/%y %H:%M:%S"` esta com numero de conexoes TCP porta 80 acima de $threshold, valor registrado: $teste" -a $LOG_D
+IR/$LOG_FILE -q -m "Nao responder este e-mail"
+
+                               echo "1" > alarme.txt
+                               echo "0" > cont_nalarmado.txt
+                fi
+
+else
+
+##Se jah estiver alarmado
+
+                if [ $teste -lt $threshold ]
+                then
+                                cont_nalarmado=`cat cont_nalarmado.txt`
+                               expr $cont_nalarmado + 1 > cont_nalarmado.txt
+                else
+                               echo "0" > cont_nalarmado.txt
+                               echo "1" > alarme.txt
+                fi
+
+
+                cont_nalarmado=`cat cont_nalarmado.txt`
+
+##Testa e envia email de normalizacao
+
+                if [ $cont_nalarmado -gt 3 ]
+                then
+
+
+$INC_DIR/sendEmail -f $MAIL_FROM -t $MAIL_TO -u "Servidor `hostname` em `date "+%d/%m/%y %H:%M:%S"` esta com numero de conexoes TCP porta 80 abaixo de $threshold, valor registrado: $teste" -a $LOG_
+DIR/$LOG_FILE -q -m "Nao responder este e-mail"
+
+                                echo "0" > alarme.txt
+                fi
+fi
+[root@FATSTLTB578B ~]#

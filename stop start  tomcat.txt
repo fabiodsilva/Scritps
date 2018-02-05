@@ -1,0 +1,77 @@
+[root@gpa-wpap22 logs]# cat /etc/init.d/tomcats-v5
+#!/bin/bash
+#
+# Init file for OpenSSH server daemon
+#
+# chkconfig: 2345 55 25
+# description: OpenSSH server daemon
+#
+# processname: tomcats-java
+
+# source function library
+. /etc/rc.d/init.d/functions
+
+start()
+{
+
+        echo -n $"Starting tomcats-java: "
+cd /opt/V5/java/tomcat-indice/bin
+nohup ./startup.sh &
+sleep 3
+
+cd /opt/V5/java/tomcat4/bin
+nohup ./startup.sh &
+sleep 3
+
+cd /opt/V5/java/tomcat3/bin
+nohup ./startup.sh &
+sleep 3
+
+cd /opt/V5/java/tomcat2/bin
+nohup ./startup.sh &
+sleep 3
+
+cd /opt/V5/java/tomcat1/bin
+nohup ./startup.sh &
+sleep 3
+        echo
+}
+
+stop()
+{
+        echo -n $"Stopping tomcats-java: "
+cd /opt/V5/java/tomcat1/bin
+./shutdown.sh
+
+cd /opt/V5/java/tomcat2/bin
+./shutdown.sh
+
+cd /opt/V5/java/tomcat3/bin
+./shutdown.sh
+
+cd /opt/V5/java/tomcat4/bin
+./shutdown.sh
+
+cd /opt/V5/java/tomcat-indice/bin
+./shutdown.sh
+
+        echo
+}
+
+case "$1" in
+        start)
+                start
+                ;;
+        stop)
+                stop
+                ;;
+        restart)
+                stop
+                start
+                ;;
+        *)
+                echo $"Usage: $0 {start|stop|restart}"
+                RETVAL=1
+esac
+exit $RETVAL
+[root@gpa-wpap22 logs]#

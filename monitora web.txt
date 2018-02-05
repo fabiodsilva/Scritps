@@ -1,0 +1,15 @@
+
+
+
+root@WEBTB2255A[/root]# more /monitoracao/script_monweb.sh
+
+#!/usr/bin/bash
+DT="`date +%d/%m/%Y-%H:%M`";
+WB="`netstat -an|grep 200.215.182.27. |grep ESTABLISHED |wc -l`";
+sleep 2
+BD="`netstat -an|grep 10.60.1.18 |wc -l`";
+sleep 2
+MC="`netstat -an|grep 207.169.19.53 |wc -l`";
+sleep 2
+echo "${DT};${WB};${BD};${MC}" >> /monitoracao/web-webtb2255a-`date +%d-%m-%Y`.csv
+#teste
