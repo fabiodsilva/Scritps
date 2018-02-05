@@ -1,9 +1,9 @@
 
 
 
-echo #--------------------------------------------------------"
+echo #----------------------------------------------------------"
 echo "jacl"
-echo #--------------------------------------------------------"
+echo #----------------------------------------------------------"
 
 sed -i '/cbss.app.ear.location.*/ a\set earFileLocationexport \[\$cbss_props getProperty cbss.app.ear.exportdst\] ' *.jacl
 sed -i '/Exporting the application.*/c\\tputs \"Exporting the application \$earFileName into \$earFileLocationexport/\$earFileName-\$timestamp.ear\" ' deploy/$PKT/*.jacl
