@@ -1,3 +1,1 @@
-Teste de criação do GIT
-
-Teste
+Scripts em Shell para várias utilidades.
