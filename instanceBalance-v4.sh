@@ -86,5 +86,3 @@ load_destino=$(tail -n1 /tmp/ordenada111 | awk -F "." '{print $1}')
 
         echo "End Balance - `date +%Y%m%d-%H:%M:%S`" >> $LOG/instancias_migradas.log
         echo "------------------------------" >> $LOG/instancias_migradas.log
-
-[root@d4-ucos-controller1 instanceBalance]#
