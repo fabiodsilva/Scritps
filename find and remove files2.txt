@@ -1,5 +1,6 @@
 #!/bin/sh
 
+
 SOURCEDIR=/u12/app/oracle/product/10.2.0/ebsh/network/log
 LIST=logs_antigos
 
