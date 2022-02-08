@@ -1,1 +1,1 @@
-* * * * * root /opt/uoldiveo/cw/cw_asg-metric.sh
+* * * * * root /opt/blabla/cw/cw_asg-metric.sh
