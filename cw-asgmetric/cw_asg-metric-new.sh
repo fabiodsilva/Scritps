@@ -19,7 +19,7 @@ aws cloudwatch put-metric-data --region "sa-east-1" --metric-name CPUUsage  --di
 echo "CPU done"
 
 else
-if  [[ $ASG = Ambev-B2B-PRODUCAO ]];
+if  [[ $ASG = ASG-PRODUCAO ]];
 then
 echo $ASG
 aws cloudwatch put-metric-data --region "sa-east-1" --metric-name MemoryUsage --dimensions instance_id=$INSTANCE --namespace "ASGCustom-Per-instance-Parceiro" --value $USEDMEMORY
