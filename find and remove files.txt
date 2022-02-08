@@ -3,6 +3,7 @@ LOGFILE=/root/script/limpeza_logs.log
 echo " " > $LOGFILE
 echo "Removendo arquivos trc, aud anteriores a 7 dias ....." >> $LOGFILE
 
+
 echo " " >> $LOGFILE
 date >>  $LOGFILE
 df -h >> $LOGFILE
@@ -11,9 +12,9 @@ echo "Quantidade de arquivos removidos ....." >> $LOGFILE
 /usr/bin/find /u??/app/oracle/ \( -name "*.aud" -o -name "*.trc" \) -mtime +7 -exec ls -la  {} \; | wc -l >> $LOGFILE
 /usr/bin/find /u01/app/11.2.0/grid/ \( -name "*.aud" -o -name "*.trc" \) -mtime +7 -exec ls -la  {} \; | wc -l >> $LOGFILE
 echo " " >> $LOGFILE
-## Find de remoç dos arquivso
+## Find de remoÃ§ dos arquivso
 /usr/bin/find /u??/app/oracle/ \( -name "*.aud" -o -name "*.trc" \) -mtime +7 -exec rm {} \; >> $LOGFILE
 /usr/bin/find /u01/app/11.2.0/grid/ \( -name "*.aud" -o -name "*.trc" \) -mtime +7 -exec rm {} \;  >> $LOGFILE
 echo " " >> $LOGFILE
-## Depois da Remoç
+## Depois da RemoÃ§
 df -h >> $LOGFILE
