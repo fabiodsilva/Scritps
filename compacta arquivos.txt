@@ -1,7 +1,7 @@
 
 Compacta arquivos
 
-[root@SRVAPPWAS03 logs]# more /var/sar/compact_sysout.sh
+[root@logs]# more /var/sar/compact_sysout.sh
 #!/bin/bash
 
 if [[ -z $1 ]] ;
@@ -22,4 +22,4 @@ echo File $i compacted...
 
 done
 
-[root@SRVAPPWAS03 logs]#
+[root@logs]#
